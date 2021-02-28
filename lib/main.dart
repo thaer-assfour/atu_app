@@ -40,7 +40,7 @@ class _RegisterState extends State<Register> {
   String password = "";
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  bool _loading = false;
+
 
   String phoneValidator(String value) {
     if (value.isEmpty)
@@ -64,9 +64,7 @@ class _RegisterState extends State<Register> {
     final FormState form = _formKey.currentState;
     if (_formKey.currentState.validate()) {
       form.save();
-      setState(() {
-        _loading = true;
-      });
+
       if (phoneNumber != "0999111222")
         return "Opps wrong phone number!";
       else if (password != "123456789")

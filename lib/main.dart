@@ -1,6 +1,9 @@
 import 'package:atu_app/Login/CustomTextField.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
+import 'Home/home.dart';
 import 'Login/background.dart';
 
 void main() {
@@ -11,11 +14,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]); // #force to set Orientations to portrait only.
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          primaryColor: Color(0xff384669),
-          accentColor: Color(0xff83c5be)),
+          primaryColor: Color(0xff384669), accentColor: Color(0xff83c5be)),
+      builder: BotToastInit(),
       home: SafeArea(child: Register()),
     );
   }
@@ -29,12 +36,16 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
+  String phoneNumber = "";
+  String password = "";
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  bool _loading = false;
 
-
-  String PhoneValidator(String value) {
-
-    if (value.isEmpty) return "Phone number required";
-    else if (value.length < 10)
+  String phoneValidator(String value) {
+    if (value.isEmpty)
+      return "Phone number required";
+    else if (value.length < 8)
       return "Phone number at least 10 numbers";
     else
       return null;
@@ -49,8 +60,23 @@ class _RegisterState extends State<Register> {
       return null;
   }
 
-
-
+  String login(phoneNumber, password) {
+    final FormState form = _formKey.currentState;
+    if (_formKey.currentState.validate()) {
+      form.save();
+      setState(() {
+        _loading = true;
+      });
+      if (phoneNumber != "0999111222")
+        return "Opps wrong phone number!";
+      else if (password != "123456789")
+        return "Opps wrong password";
+      else
+        return "Success";
+    } else {
+      _autoValidate = true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,62 +84,83 @@ class _RegisterState extends State<Register> {
       body: Stack(
         children: [
           backGround(),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.1,
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(0, 40, 0, 40),
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.5,
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.25,
-                child: Image.network("https://i.ibb.co/jrDGz0z/download.jpg"),
-              ),
-              Form(
-                  autovalidate: _autoValidate,
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      CustomTextField(
-                        labelText: "Phone number",
-                        icon: Icon(Icons.phone),
-                        validator: PhoneValidator,
-                        prefixText: "09",
-                      ),
-                      CustomTextField(
-                        labelText: "Password",
-                        obsecure: true,
-                        icon: Icon(Icons.lock_outline),
-                        validator: passwordValidator,
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        child: RaisedButton(
-                            onPressed: () {},
+          SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.08,
+                ),
+                Container(
+                  padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  height: MediaQuery.of(context).size.height * 0.25,
+                  child: Image.network("https://i.ibb.co/jrDGz0z/download.jpg"),
+                ),
+                Form(
+                    autovalidate: _autoValidate,
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        CustomTextField(
+                          controller: phoneNumberController,
+                          labelText: "Phone number",
+                          icon: Icon(Icons.phone),
+                          keyboardType: "number",
+                          validator: phoneValidator,
+                          prefixText: "09",
+                          onSaved: (val) {
+                            phoneNumber = phoneNumberController.text;
+                          },
+                        ),
+                        CustomTextField(
+                          controller: passwordController,
+                          labelText: "Password",
+                          obsecure: true,
+                          icon: Icon(Icons.lock_outline),
+                          validator: passwordValidator,
+                          onSaved: (val) {
+                            password = passwordController.text;
+                          },
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: RaisedButton(
+                            onPressed: () {
+                              _formKey.currentState.save();
+                              String authResult =
+                                  login("09" + phoneNumber, password);
+                              if (authResult != "Success")
+                                BotToast.showSimpleNotification(
+                                    title: "Wrong",
+                                    subTitle: authResult.toString(),
+                                    titleStyle:
+                                        TextStyle(color: Color(0xfff7f7f7)),
+                                    subTitleStyle:
+                                        TextStyle(color: Color(0xfff7f7f7)),
+                                    backgroundColor: Color(0xff384669));
+                              else
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Home()));
+                            },
                             child: Text(
-                              "Login", style: TextStyle(color: Colors.white,fontSize: 18),),
-                            color: Theme
-                                .of(context)
-                                .primaryColor,
+                              "Login",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18),
+                            ),
+                            color: Theme.of(context).primaryColor,
                             elevation: 7,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),
                             ),
-                        ),
-                      )
-                    ],
-                  ))
-            ],
+                          ),
+                        )
+                      ],
+                    ))
+              ],
+            ),
           )
         ],
       ),

@@ -10,9 +10,11 @@ class CustomTextField extends StatelessWidget {
       this.validator,
       this.onSaved,
       this.prefixText,
-      this.keyboardType});
+      this.keyboardType,
+      this.controller});
 
   final FormFieldSetter<String> onSaved;
+  TextEditingController controller;
   final Widget icon;
   final String labelText;
   final bool obsecure;
@@ -26,6 +28,7 @@ class CustomTextField extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
       child: TextFormField(
+        controller: controller,
         onSaved: onSaved,
         validator: validator,
         autofocus: false,
@@ -37,6 +40,8 @@ class CustomTextField extends StatelessWidget {
             fontSize: 18, height: 1.2, color: Theme.of(context).primaryColor,fontWeight: FontWeight.w500),
         decoration: InputDecoration(
             prefixText: prefixText,
+            prefixStyle: TextStyle(
+                fontSize: 18, height: 1.2, color: Theme.of(context).primaryColor,fontWeight: FontWeight.w500),
             hintText: hint,
             hintStyle: TextStyle(fontWeight: FontWeight.w400, fontSize: 20),
             labelText: labelText,

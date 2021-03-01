@@ -147,7 +147,7 @@ class _RegisterState extends State<Register> {
                                 Navigator.push(
                                   context,
                                   PageTransition(
-                                    duration: Duration(milliseconds: 300),
+                                    duration: Duration(milliseconds: 400),
                                     type:PageTransitionType.rightToLeft,
                                     child: Home(),
                                   ),

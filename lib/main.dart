@@ -144,7 +144,7 @@ class _RegisterState extends State<Register> {
                                 //     context,
                                 //     MaterialPageRoute(
                                 //         builder: (context) => Home()));
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                   context,
                                   PageTransition(
                                     duration: Duration(milliseconds: 400),

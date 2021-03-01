@@ -2,6 +2,7 @@ import 'package:atu_app/Login/CustomTextField.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'Home/home.dart';
 import 'Login/background.dart';
@@ -108,7 +109,7 @@ class _RegisterState extends State<Register> {
                           validator: phoneValidator,
                           prefixText: "09",
                           onSaved: (val) {
-                            phoneNumber = phoneNumberController.text;
+                            phoneNumber = "09" + phoneNumberController.text;
                           },
                         ),
                         CustomTextField(
@@ -125,9 +126,10 @@ class _RegisterState extends State<Register> {
                           width: MediaQuery.of(context).size.width * 0.4,
                           child: RaisedButton(
                             onPressed: () {
+                              FocusScope.of(context).unfocus();
                               _formKey.currentState.save();
                               String authResult =
-                                  login("09" + phoneNumber, password);
+                                  login( phoneNumber, password);
                               if (authResult != "Success")
                                 BotToast.showSimpleNotification(
                                     title: "Wrong",
@@ -138,10 +140,18 @@ class _RegisterState extends State<Register> {
                                         TextStyle(color: Color(0xfff7f7f7)),
                                     backgroundColor: Color(0xff384669));
                               else
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => Home()));
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Home()));
+                                  context,
+                                  PageTransition(
+                                    duration: Duration(milliseconds: 300),
+                                    type:PageTransitionType.rightToLeft,
+                                    child: Home(),
+                                  ),
+                                );
                             },
                             child: Text(
                               "Login",

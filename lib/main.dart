@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primaryColor: Color(0xff384669), accentColor: Color(0xff83c5be)),
       builder: BotToastInit(),
-      home: SafeArea(child: Register()),
+      home: SafeArea(child: Home()),
     );
   }
 }

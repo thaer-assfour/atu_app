@@ -17,6 +17,25 @@ class _HomeState extends State<Home> {
         centerTitle: true,
       ),
       drawer: MyDrawer(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.all(32),
+              child: CircleAvatar(
+                radius: 100,
+                backgroundColor: Color(0xffa8dadc),
+                child: Image.network(
+                  "https://img.icons8.com/officel/2x/person-male.png",
+                  color: Color(0xff384669),
+                //  fit: BoxFit.cover,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     ));
   }
 }

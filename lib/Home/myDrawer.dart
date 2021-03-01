@@ -38,7 +38,6 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
           ),
           Divider(color: Color(0xff384669),thickness: 1,),
-
           Container(
             width: MediaQuery.of(context).size.width * 0.7,
             child: InkWell(
@@ -149,7 +148,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 });
               },
             ),
-          )
+          ),
         ],
       ),
     ) ;// Details Container

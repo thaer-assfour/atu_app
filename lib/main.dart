@@ -42,7 +42,6 @@ class _RegisterState extends State<Register> {
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-
   String phoneValidator(String value) {
     if (value.isEmpty)
       return "Phone number required";
@@ -112,6 +111,12 @@ class _RegisterState extends State<Register> {
                             phoneNumber = "09" + phoneNumberController.text;
                           },
                         ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(28,2,0,8),
+                          child: Align(
+                              alignment: Alignment.bottomLeft,
+                              child: Text("Example:0999111222",style: TextStyle(color: Colors.grey.withOpacity(0.5),fontSize: 12),)),
+                        ),
                         CustomTextField(
                           controller: passwordController,
                           labelText: "Password",
@@ -128,8 +133,7 @@ class _RegisterState extends State<Register> {
                             onPressed: () {
                               FocusScope.of(context).unfocus();
                               _formKey.currentState.save();
-                              String authResult =
-                                  login( phoneNumber, password);
+                              String authResult = login(phoneNumber, password);
                               if (authResult != "Success")
                                 BotToast.showSimpleNotification(
                                     title: "Wrong",
@@ -148,7 +152,7 @@ class _RegisterState extends State<Register> {
                                   context,
                                   PageTransition(
                                     duration: Duration(milliseconds: 400),
-                                    type:PageTransitionType.rightToLeft,
+                                    type: PageTransitionType.rightToLeft,
                                     child: Home(),
                                   ),
                                 );

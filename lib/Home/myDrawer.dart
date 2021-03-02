@@ -18,10 +18,10 @@ class _MyDrawerState extends State<MyDrawer> {
       width: MediaQuery.of(context).size.width * 0.7,
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border.all(width: 1.0, color: Colors.teal),
+        border: Border.all(width: 1.0, color: Color(0xff384669)),
         borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(48.0),
-          topRight: Radius.circular(48.0),
+          bottomRight: Radius.circular(64),
+          topRight: Radius.circular(64),
         ),
       ),
       child: Column(

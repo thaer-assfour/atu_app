@@ -109,6 +109,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.7.0"
+  show_up_animation:
+    dependency: "direct main"
+    description:
+      name: show_up_animation
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.4"
   sky_engine:
     dependency: transitive
     description: flutter

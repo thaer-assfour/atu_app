@@ -1,6 +1,10 @@
 import 'dart:io';
+import 'package:atu_app/education/education.dart';
+import 'package:atu_app/experience/experience.dart';
+import 'package:atu_app/skills/skills.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:page_transition/page_transition.dart';
 
 class MyDrawer extends StatefulWidget {
   @override
@@ -57,7 +61,15 @@ class _MyDrawerState extends State<MyDrawer> {
                 ),
               ),
               onTap: () {
-
+                Navigator. pop(context);
+                Navigator.push(
+                  context,
+                  PageTransition(
+                    duration: Duration(milliseconds: 400),
+                    type: PageTransitionType.rightToLeft,
+                    child: Skills(),
+                  ),
+                );
               },
             ),
           ),
@@ -80,7 +92,15 @@ class _MyDrawerState extends State<MyDrawer> {
                 ),
               ),
               onTap: () {
-
+                Navigator. pop(context);
+                Navigator.push(
+                  context,
+                  PageTransition(
+                    duration: Duration(milliseconds: 400),
+                    type: PageTransitionType.rightToLeft,
+                    child: Experience(),
+                  ),
+                );
               },
             ),
           ),
@@ -104,6 +124,15 @@ class _MyDrawerState extends State<MyDrawer> {
                 ),
               ),
               onTap: () {
+                Navigator. pop(context);
+                Navigator.push(
+                  context,
+                  PageTransition(
+                    duration: Duration(milliseconds: 400),
+                    type: PageTransitionType.rightToLeft,
+                    child: Education(),
+                  ),
+                );
               },
             ),
           ),
